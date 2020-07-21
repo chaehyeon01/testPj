@@ -1,0 +1,26 @@
+<?php
+
+ $host='localhost';
+ $user='nam';
+ $pwd='123456';
+ 
+ 
+
+
+?>
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css.css">
+    <title>테스트 게시판</title>
+</head>
+<body>
+    <div id="wrap">
+        <h1>게시판</h1>
+
+    </div>
+</body>
+</html>
