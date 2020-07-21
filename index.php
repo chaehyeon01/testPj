@@ -1,11 +1,5 @@
 <?php
-
-$host='127.0.0.1';
-$user='root';
-$pwd='123456';
-$dbName='testboard';
-$mySqli=new mysqli($host,$user,$pwd,$dbName);
-
+include $_SERVER["DOCUMENT_ROOT"]."/test/server_conn.php";
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +76,7 @@ $mySqli=new mysqli($host,$user,$pwd,$dbName);
                             $upt_date=$row['upt_date'];
                             $view_count=$row['view_count'];
 
-                            echo "<tr>
+                            echo "<tr onclick='goPgae($seq)'>
                                 <td>$number</td>
                                 <td>$mem_id</td>
                                 <td>$mem_name</td>
@@ -95,7 +89,7 @@ $mySqli=new mysqli($host,$user,$pwd,$dbName);
                             $number--;
                         }
 
-                       
+                       mysqli_close($mySqli);
 
                     } 
 
@@ -152,7 +146,16 @@ $mySqli=new mysqli($host,$user,$pwd,$dbName);
         $(function(){
 
             
+
+           
         });
+
+        function goPgae(num) {
+            
+            location.href='./viewBoard.php?seq='+num;
+
+        }
+            
     
     </script>
 </body>

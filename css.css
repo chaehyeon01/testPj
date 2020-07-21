@@ -26,6 +26,7 @@ th, td {
 
 tbody tr:hover {
     background-color:#eee;
+    cursor: pointer;
 }
 .page {
     margin-top:20px;
