@@ -10,6 +10,9 @@ h1 {
     padding-top:50px;
     padding-bottom:50px;
 }
+a {
+    text-decoration: none;
+}
 .list {
     width:90%;
     border: 1px solid #444444;
@@ -23,4 +26,17 @@ th, td {
 
 tbody tr:hover {
     background-color:#eee;
+}
+.page {
+    margin-top:20px;
+    
+}
+.page li {
+    display: inline-block;
+    margin-right:5px;
+   line-height:30px;
+}
+.page li a {
+    color:#444;
+    display:block;
 }

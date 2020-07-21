@@ -37,16 +37,38 @@ $mySqli=new mysqli($host,$user,$pwd,$dbName);
 
                 if($mySqli){
 
+                    if(isset($_GET["page"])){
+                        $page = $_GET["page"];
+                    }else {
+                        $page = 1;
+                    }
+
                     $success=true;
 
-                    $query="select * from boardlist";
+                    $query="select * from boardlist order by seq desc";
                     $result=mysqli_query($mySqli,$query);
 
                     if($query){
                         
                         $count=mysqli_num_rows($result);
+
+                        $scale=5; //몇개 보여줄건지...
+
+
+                        //전체페이지 구하기
+                        if ($count % $scale == 0 ){
+                            $total_page = floor($count/$scale);
+                        }else {
+                            $total_page = floor($count/$scale)+1;
+                        }
+
+                        //페이지에 따른 게시판 리스트 불러오기
+
+                        $pageSetNum= ($page - 1) * $scale;
+
+                        $number = $count - $pageSetNum;
                         
-                        for($i=0;$i<$count;$i++){
+                        for($i=$pageSetNum; $i< $pageSetNum+$scale && $i < $count ;$i++){
 
                             mysqli_data_seek($result,$i);
 
@@ -61,7 +83,7 @@ $mySqli=new mysqli($host,$user,$pwd,$dbName);
                             $view_count=$row['view_count'];
 
                             echo "<tr>
-                                <td>$seq</td>
+                                <td>$number</td>
                                 <td>$mem_id</td>
                                 <td>$mem_name</td>
                                 <td>$board_subject</td>
@@ -70,8 +92,10 @@ $mySqli=new mysqli($host,$user,$pwd,$dbName);
                                 <td>$view_count</td>
                             </tr>";
 
+                            $number--;
                         }
 
+                       
 
                     } 
 
@@ -83,6 +107,41 @@ $mySqli=new mysqli($host,$user,$pwd,$dbName);
                 ?>
             </tbody>
         </table>
+        <ul class="page">
+            <?php
+            
+            //이전 글씨 찍기
+            if($count >=2 && $page >=2) {
+                $new_page = $page-1;
+                echo "<li><a href='index.php?page=$new_page'>◀</a></li>";
+            }else {
+                echo "<li>&nbsp;</li>";
+            }
+            
+            //게시판 페이지 숫자 찍기 
+             for($i=1;$i<=$total_page; $i++){
+                 if($page==$i) {
+                     echo "<li style='background-color:#333; width:30px;
+                     height:30px;color:#fff;  background-color:#333; '><b>$i</b></li>";
+                 } else {
+                     echo "<li style='width:30px;
+                     height:30px;
+                     background-color:#eee;
+                     ' ><a href='index.php?page=$i'>$i</a></li>";
+                 }
+             }
+
+             //다음 글씨 찍기
+             if($count >=2 && $page != $total_page) {
+                 $new_page= $page+1;
+                 echo "<li  style='width:50px;'><a href='index.php?page=$new_page'>▶</a></li>";
+             }else {
+                 echo "<li>&nbsp;</li>";
+             }
+
+            
+            ?>
+        </ul>
     </div>
     <script>
         
